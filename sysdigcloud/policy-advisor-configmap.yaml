@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: policy-advisor-config
+data:
+  ####################################
+  # K8s Policy Advisor Daemon Config
+  ####################################
+  api.enabled: true
+  api.endpoint: "0.0.0.0"
+  api.port: 8176
+  api.readTimeout: "5s"
+  api.stopTimeout: "5s"
+
+  backend.url: "http://sysdigcloud-api"
+  backend.tlsCheckCertificate: true
+
+  mysql.endpoint: "sysdigcloud-mysql"
+  mysql.user: "padvisoruser"
+  mysql.dbname: "sysdig_padvisor"

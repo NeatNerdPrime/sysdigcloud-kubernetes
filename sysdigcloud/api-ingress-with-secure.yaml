@@ -26,6 +26,10 @@ spec:
               serviceName: sysdigcloud-scanning-api
               servicePort: 80 
             path: /api/scanning
+          - backend:
+              serviceName: sysdigcloud-policy-advisor
+              servicePort: 8132
+            path: /api/padvisor
   tls:
     - hosts:
         - <EXTERNAL-DNS-NAME>

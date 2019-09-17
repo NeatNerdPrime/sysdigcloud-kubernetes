@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sysdigcloud-policy-advisor
+  labels:
+    app: sysdigcloud
+    role: policy-advisor
+spec:
+  # Replicas can be scaled up as needed.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sysdigcloud
+      role: policy-advisor
+  template:
+    metadata:
+      labels:
+        app: sysdigcloud
+        role: policy-advisor
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '80'
+    spec:
+      imagePullSecrets:
+        - name: sysdigcloud-pull-secret
+      containers:
+        - name: policy-advisor
+          image: quay.io/sysdig/policy-advisor:0.0.1.9876
+          volumeMounts:
+            - name: padvisor-config
+              mountPath: /opt/padvisor_config
+          imagePullPolicy: IfNotPresent
+          resources:
+            {}
+      volumes:
+        - name: padvisor-config
+          configMap:
+            name: policy-advisor-config
+
