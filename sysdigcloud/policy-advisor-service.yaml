@@ -9,7 +9,7 @@ spec:
   type: ClusterIP
   ports:
   - name: http
-    port: 8132
+    port: 8176
   selector:
     app: sysdigcloud
     role: policy-advisor

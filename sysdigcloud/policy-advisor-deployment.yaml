@@ -26,7 +26,7 @@ spec:
         - name: sysdigcloud-pull-secret
       containers:
         - name: policy-advisor
-          image: quay.io/sysdig/policy-advisor:0.0.1.9876
+          image: "docker.internal.sysdig.com/padvisor:e3aadac"
           volumeMounts:
             - name: padvisor-config
               mountPath: /opt/padvisor_config

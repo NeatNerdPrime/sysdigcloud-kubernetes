@@ -28,7 +28,7 @@ spec:
             path: /api/scanning
           - backend:
               serviceName: sysdigcloud-policy-advisor
-              servicePort: 8132
+              servicePort: 8176
             path: /api/padvisor
   tls:
     - hosts:
