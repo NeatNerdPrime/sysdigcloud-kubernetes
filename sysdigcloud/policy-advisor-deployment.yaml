@@ -31,6 +31,12 @@ spec:
             - name: padvisor-config
               mountPath: /config
           imagePullPolicy: IfNotPresent
+          env:
+            - name: PADVISOR_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sysdigcloud-policy-advisor
+                  key: padvisor.mysql.password
           resources:
             {}
       volumes:
