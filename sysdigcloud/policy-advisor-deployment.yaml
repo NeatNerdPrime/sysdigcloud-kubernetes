@@ -29,7 +29,7 @@ spec:
           image: "docker.internal.sysdig.com/padvisor:e3aadac"
           volumeMounts:
             - name: padvisor-config
-              mountPath: /opt/padvisor_config
+              mountPath: /config
           imagePullPolicy: IfNotPresent
           resources:
             {}
