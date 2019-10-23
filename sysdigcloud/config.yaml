@@ -203,7 +203,17 @@ data:
   # anchore.worker.https.proxy: https://user:password@proxy.corp.example2.com:8128
   #
   # anchore.no.proxy: 127.0.0.1, localhost, sysdigcloud-anchore-core
-  
+
+  ####################################
+  # Policy Advisor
+  ####################################
+  padvisor.backend.url: "http://sysdigcloud-api:8080"
+  padvisor.backend.tlsCheck: "false"
+  padvisor.mysql.username: "padvisor"
+  padvisor.mysql.database: "padvisor"
+  padvisor.mysql.host: "sysdigcloud-mysql"
+  padvisor.mysql.port: "3306"
+
   ####################################
   # AUDIT EVENTS LOGGING #
   ####################################

@@ -42,5 +42,5 @@ spec:
       volumes:
         - name: padvisor-config
           configMap:
-            name: policy-advisor-config
+            name: sysdigcloud-config
 
