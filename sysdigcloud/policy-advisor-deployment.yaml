@@ -29,7 +29,7 @@ spec:
           image: quay.io/sysdig/padvisor:2.3.0.2461
           volumeMounts:
             - name: padvisor-config
-              mountPath: /config
+              mountPath: /cfg
           imagePullPolicy: IfNotPresent
           env:
             - name: PADVISOR_MYSQL_PASSWORD
