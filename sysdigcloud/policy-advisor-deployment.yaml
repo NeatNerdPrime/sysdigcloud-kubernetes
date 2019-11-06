@@ -6,6 +6,13 @@ metadata:
     app: sysdigcloud
     role: policy-advisor
 spec:
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   # Replicas can be scaled up as needed.
   replicas: 1
   selector:
@@ -20,15 +27,37 @@ spec:
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/path: '/metrics'
-        prometheus.io/port: '80'
+        prometheus.io/port: '8176'
     spec:
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
       imagePullSecrets:
         - name: sysdigcloud-pull-secret
+      initContainers:
+        - name: policy-advisor-setup-database
+          image: quay.io/sysdig/padvisor:2.4.1.5129
+          command: ["/padvisor", "--create-mysql-db"]
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: /cfg
+          env:
+            - name: PADVISOR_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sysdigcloud-policy-advisor
+                  key: padvisor.mysql.password
+            - name: PADVISOR_MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: mysql.password
+                  name: sysdigcloud-config
       containers:
         - name: policy-advisor
-          image: quay.io/sysdig/padvisor:2.3.0.2461
+          image: quay.io/sysdig/padvisor:2.4.1.5129
           volumeMounts:
-            - name: padvisor-config
+            - name: config
               mountPath: /cfg
           imagePullPolicy: IfNotPresent
           env:
@@ -40,7 +69,7 @@ spec:
           resources:
             {}
       volumes:
-        - name: padvisor-config
+        - name: config
           configMap:
-            name: policy-advisor-config
+            name: sysdigcloud-config
 

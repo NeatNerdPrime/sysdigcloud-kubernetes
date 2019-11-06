@@ -6,10 +6,13 @@ metadata:
     app: sysdigcloud
     role: policy-advisor
 spec:
+  sessionAffinity: None
   type: ClusterIP
   ports:
   - name: http
     port: 8176
+    targetPort: 8176
+    protocol: TCP
   selector:
     app: sysdigcloud
     role: policy-advisor
